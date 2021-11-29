@@ -12,14 +12,16 @@ import { defineComponent, onMounted, ref } from 'vue';
 import QrScanner from 'qr-scanner';
 
 export default defineComponent({
-  setup() {
+  emits: ['scanned'],
+  setup(_, {emit}) {
 
     const videoRef = ref<HTMLVideoElement | null>(null);
 
     onMounted(async () => {
       console.log('MOunted')
       const scanner = new QrScanner(videoRef.value as HTMLVideoElement, result => {
-        console.log(result);
+        if (result.length < 1) return;
+        emit('scanned', result)
       });
       await scanner.start();
     });
@@ -34,6 +36,8 @@ export default defineComponent({
   position: relative;
   width: 600px;
   height: 600px;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 .alignment {
@@ -43,7 +47,8 @@ export default defineComponent({
   top: calc(50% - 200px);
   width: 400px;
   height: 400px;
-  border: 2px solid red;
+  border: 10px solid red;
+  border-radius: 5px;
 
 }
 </style>

@@ -27,7 +27,7 @@
           If you have already gone through the verification process
         </p>
       </router-link>
-      <router-link to='' class='section-button'>
+      <router-link :to='{name: "verification"}' class='section-button'>
         Not Verified
         <p class='section-button__desc'>
           If you have not already gone through the verification process

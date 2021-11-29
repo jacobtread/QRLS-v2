@@ -8,6 +8,7 @@ import { VisitsModule } from './visits/visits.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MembersModule } from './members/members.module';
+import { VerifyModule } from './verify/verify.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { MembersModule } from './members/members.module';
     MongooseModule.forRoot(process.env.DATABASE_URL),
     VisitsModule,
     MembersModule,
+    VerifyModule,
   ],
   controllers: [ AppController ],
   providers: [ AppService ],

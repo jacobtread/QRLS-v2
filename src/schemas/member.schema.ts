@@ -2,14 +2,15 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { VerifiedCredentials, VerifiedCredentialsSchema } from './verified-credentials.schema';
 
-export type MemberDocument = VerifiedMember & Document
+export type MemberDocument = Member & Document
 
 @Schema()
-export class VerifiedMember {
+export class Member {
 
   @Prop() name: string;
   @Prop({ type: VerifiedCredentialsSchema, required: false }) credentials: VerifiedCredentials;
+  @Prop({ required: true, default: false }) verifiedState: boolean;
 
 }
 
-export const MemberSchema = SchemaFactory.createForClass(VerifiedMember);
+export const MemberSchema = SchemaFactory.createForClass(Member);

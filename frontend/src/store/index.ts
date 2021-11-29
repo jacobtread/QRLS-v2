@@ -6,7 +6,7 @@ interface State {
 
 export default createStore<State>({
   state: {
-    mandate: false
+    mandate: true
   },
   mutations: {
   },
