@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class='wrapper'>
-      <video ref='videoRef' width='600' height='600' />
+      <video ref='videoRef' width='400' />
       <div class='alignment'></div>
     </div>
   </div>
@@ -33,11 +33,15 @@ export default defineComponent({
 
 <style scoped lang='scss'>
 .wrapper {
+  display: flex;
+  align-items: center;
   position: relative;
-  width: 600px;
-  height: 600px;
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
+  width: 400px;
+  height: 400px;
+  overflow: hidden;
+  -webkit-transform: scale(-1.5, 1.5);
+  transform: scale(-1.5, 1.5);
+  background: black;
 }
 
 .alignment {
