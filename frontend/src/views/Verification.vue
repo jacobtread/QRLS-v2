@@ -33,7 +33,6 @@ export default defineComponent({
 
     async function completeScan(data: string) {
       showScanner.value = false
-      console.log(data);
       const response = await fetch('http://localhost:3000/api/verify/start', {
         method: 'POST',
         headers: {

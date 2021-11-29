@@ -43,10 +43,10 @@ export default defineComponent({
 .alignment {
 
   position: absolute;
-  left: calc(50% - 200px);
-  top: calc(50% - 200px);
-  width: 400px;
-  height: 400px;
+  left: calc(50% - 150px);
+  top: calc(50% - 150px);
+  width: 300px;
+  height: 300px;
   border: 10px solid red;
   border-radius: 5px;
 
