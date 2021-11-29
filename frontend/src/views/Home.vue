@@ -20,15 +20,15 @@
         </p>
       </router-link>
       <router-link to='' class='section-button'>
-        Un-Verified
+        Not Verified
         <p class='section-button__desc'>
           If you have not already gone through the verification process
         </p>
       </router-link>
       <router-link to='' class='section-button'>
-        Un-Vaccinated
+        Not Vaccinated
         <p class='section-button__desc'>
-          If you are not vaccinated and are above the age of 12 years (+3 months)
+          If you are not vaccinated and are above the age of 12 years <span>(+3 months)</span>
         </p>
       </router-link>
     </div>
