@@ -2,6 +2,14 @@
   <div class='home'>
     <div class='block'>
       <Logo class='logo' />
+
+      <p class='mandate'>
+        <template v-if='mandate'>Vaccine Verification is currently Mandatory</template>
+        <template v-else>Vaccine Verification is currently not mandatory</template>
+      </p>
+
+      <p v-if='mandate' class='mandate__desc'>We are required to verify your vaccination pass</p>
+
       <p class='description'>
         Welcome to <b>Questionable Research Labs</b> if you are under 12 years <span>(+3 months)</span> old please push
         the button with the
@@ -25,10 +33,17 @@
           If you have not already gone through the verification process
         </p>
       </router-link>
-      <router-link to='' class='section-button'>
+      <router-link to='' class='section-button' v-if='mandate'>
         Not Vaccinated
         <p class='section-button__desc'>
           If you are not vaccinated and are above the age of 12 years <span>(+3 months)</span>
+        </p>
+      </router-link>
+      <router-link to='' class='section-button' v-else>
+        Without Verification
+        <p class='section-button__desc'>
+          Because the we are not currently required to validate vaccination passes you can choose to check in normally
+          here
         </p>
       </router-link>
     </div>
@@ -36,18 +51,36 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent } from 'vue';
+import { defineComponent, toRef } from 'vue';
 import Logo from '@/assets/logo.svg?inline';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   components: { Logo },
+  setup() {
+    const { state } = useStore();
+    const mandate = toRef(state, 'mandate');
+
+    return { mandate };
+  },
 });
 </script>
 
 <style lang='scss' scoped>
 .logo {
   height: 250px;
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
+}
+
+.mandate {
+  font-size: 1.5rem;
+  max-width: 550px;
+  color: #fd4848;
+
+  &__desc {
+    color: #888;
+    margin-top: 0.5rem;
+  }
 }
 
 .home {
@@ -58,6 +91,7 @@ export default defineComponent({
 }
 
 .description {
+  margin-top: 1rem;
   max-width: 500px;
   line-height: 2;
   font-size: 1.25em;

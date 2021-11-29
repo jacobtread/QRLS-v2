@@ -1,9 +1,12 @@
 import { createStore } from 'vuex'
 
-export default createStore({
+interface State {
+  mandate: boolean;
+}
+
+export default createStore<State>({
   state: {
-
-
+    mandate: false
   },
   mutations: {
   },
