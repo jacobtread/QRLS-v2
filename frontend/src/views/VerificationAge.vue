@@ -2,6 +2,9 @@
   <div class='content'>
     <div class='block'>
       <Logo class='logo' />
+      <p class='description'>
+        This page will automatically close in 10s if no action is completed.
+      </p>
       <router-link :to='{name: "home"}' class='button back'>
         Go Back
       </router-link>
@@ -28,13 +31,14 @@
 import { defineComponent, toRef } from 'vue';
 import Logo from '@/assets/logo.svg?inline';
 import { useStore } from 'vuex';
+import { setRedirectIn } from '../../tools';
 
 export default defineComponent({
   components: { Logo },
   setup() {
     const { state } = useStore();
     const mandate = toRef(state, 'mandate');
-
+    setRedirectIn('home', 10)
     return { mandate };
   },
 });

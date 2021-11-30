@@ -3,6 +3,7 @@ import Home from '../views/Home.vue';
 import VerificationAge from '@/views/VerificationAge.vue';
 import VerificationU12 from '@/views/VerificationU12.vue';
 import VerificationO12 from '@/views/VerificationO12.vue';
+import { clearRedirect } from '../../tools';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -35,6 +36,10 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.afterEach(() => {
+  clearRedirect();
 });
 
 export default router;

@@ -120,7 +120,7 @@ export class VerifyService {
     }
 
     // Create New Verified Member
-    const newMember = new this.memberModel({ name, verifiedState: true, dob: dob.toJSDate() });
+    const newMember = new this.memberModel({ name, verifiedState: false, dob: dob.toJSDate() });
     const member = await newMember.save();
     // Creating Visit Entry
     await this.visitsService.create({ member: member._id });

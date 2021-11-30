@@ -95,6 +95,7 @@
         Please use the <b>Verified</b> button. Please press the <b>Okay</b> button and we will
         take you back to the main page
       </p>
+      <p class='dialog__message'>This message will automatically close in 10s</p>
       <router-link class='button' :to='{name: "home"}'>
         Okay
       </router-link>
@@ -111,6 +112,7 @@ import Loader from '@/components/Loader.vue';
 import Dialog from '@/components/Dialog.vue';
 import { VACCINE_PASS_REGEX } from '@/constants';
 import { useRouter } from 'vue-router';
+import { setRedirectIn } from '../../tools';
 
 export default defineComponent({
   components: { Dialog, Loader, QRScanner, Logo },
@@ -146,7 +148,7 @@ export default defineComponent({
         }
       } catch (e: any) {
         if (e.response) {
-          const { data, status } = e.response;
+          const { status } = e.response;
           console.log(status);
           if (status === 422) {
             state.value = 'already-verified';
@@ -190,6 +192,7 @@ export default defineComponent({
           const { status } = e.response;
           if (status === 422) {
             state.value = 'already-verified';
+            setRedirectIn('home', 10)
           } else if (status === 400) {
             state.value = 'invalid-code';
           }

@@ -73,6 +73,7 @@ import DOBPicker from '@/components/DOBPicker.vue';
 import { DateTime, Interval } from 'luxon';
 import { verifyU12 } from '@/api/verify';
 import { useRouter } from 'vue-router';
+import { setRedirectIn } from '../../tools';
 
 export default defineComponent({
   components: { DOBPicker, Dialog, Loader, Logo },
@@ -102,17 +103,13 @@ export default defineComponent({
 
     function complete() {
       state.value = 'complete';
-      setTimeout(() => {
-        push({ name: 'home' });
-      }, 10 * 1000);
+      setRedirectIn('home', 10);
     }
 
     async function verify() {
       if (!isValidDate()) {
         state.value = 'too-old';
-        setTimeout(() => {
-          push({ name: 'home' });
-        }, 10 * 1000);
+        setRedirectIn('home', 10);
         return;
       }
       state.value = 'loading';
@@ -130,9 +127,7 @@ export default defineComponent({
           const { status } = e.response;
           if (status === 422) {
             state.value = 'already-verified';
-            setTimeout(() => {
-              push({ name: 'home' });
-            }, 10 * 1000);
+            setRedirectIn('home', 10)
           }
         } else {
           state.value = 'error-message';
