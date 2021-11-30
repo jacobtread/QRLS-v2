@@ -50,17 +50,6 @@ export default defineComponent({
   margin-bottom: 2rem;
 }
 
-.mandate {
-  font-size: 1.5rem;
-  max-width: 550px;
-  color: #fd4848;
-
-  &__desc {
-    color: #888;
-    margin-top: 0.5rem;
-  }
-}
-
 .content {
   display: flex;
   justify-content: space-evenly;
@@ -75,6 +64,7 @@ export default defineComponent({
   font-size: 1.25em;
   font-weight: 500;
   color: #cacaca;
+  margin-bottom: 2rem;
 
   b {
     font-weight: bold;

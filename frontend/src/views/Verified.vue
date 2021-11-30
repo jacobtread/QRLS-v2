@@ -15,7 +15,7 @@
         @focus='selected = -1'
       >
       <div class='button-group'>
-        <router-link class='button' :to='{name: "home"}'>Done</router-link>
+        <button class='button' @click='done'>Done</button>
         <router-link class='button' :to='{name: "home"}'>Back</router-link>
       </div>
       <div class='list' tabindex='2' id='membersList'>
@@ -59,11 +59,10 @@
         Please push the retry button to try again. If this problem persists please
         find a facilitator and let them know about the problem.
       </p>
-      <button class='button' @click='state = "scanning"'>
+      <button class='button' @click='state = "initial"'>
         Retry
       </button>
     </Dialog>
-
   </div>
 </template>
 
@@ -71,12 +70,13 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import { getList } from '@/api/verify';
 import Logo from '@/assets/logo.svg?inline';
-import { setRedirectIn } from '../../tools';
+import { clearRedirect, setRedirectIn } from '../../tools';
 import Loader from '@/components/Loader.vue';
 import { markVisitVerified } from '@/api/visit';
+import Dialog from '@/components/Dialog.vue';
 
 export default defineComponent({
-  components: { Loader, Logo },
+  components: { Dialog, Loader, Logo },
   setup() {
     const name = ref('');
 
@@ -90,13 +90,10 @@ export default defineComponent({
 
     function sortList() {
       resetTimer();
-      if (name.value.length < 1) {
-        visibleMembers.value = members.value;
-      } else {
-        visibleMembers.value = members.value
-          .filter(v => nameRank(v.name.toLowerCase()) > 0)
-          .sort(rankSort);
-      }
+
+      visibleMembers.value = members.value
+        .filter(v => nameRank(v.name.toLowerCase()) > 0)
+        .sort(rankSort);
     }
 
     function nameRank(v: string): number {
@@ -115,7 +112,6 @@ export default defineComponent({
 
     onMounted(async () => {
       members.value = await getList();
-      visibleMembers.value = members.value;
     });
 
     async function inputKey(e: KeyboardEvent) {
@@ -134,6 +130,10 @@ export default defineComponent({
       }
     }
 
+    function done() {
+
+    }
+
     function complete() {
       state.value = 'complete';
       setRedirectIn('home', 10);
@@ -142,6 +142,7 @@ export default defineComponent({
     async function markAttendance(item: VerifyListItem) {
       state.value = 'loading';
       try {
+        clearRedirect();
         const timeStart = performance.now();
         await markVisitVerified(item._id);
         const duration = performance.now() - timeStart;
@@ -170,7 +171,11 @@ export default defineComponent({
 
     setRedirectIn('home', 10);
 
-    return { name, inputKey, visibleMembers, selected, sortList, enterFocusRow, selectIndex, state };
+    return {
+      name, inputKey, visibleMembers,
+      done, selected, sortList, enterFocusRow,
+      selectIndex, state
+    };
   },
 });
 </script>
@@ -193,6 +198,7 @@ export default defineComponent({
   &__logo {
     height: 240px;
     margin-bottom: 2rem;
+    margin-top: 1rem;
   }
 
   &__text {
