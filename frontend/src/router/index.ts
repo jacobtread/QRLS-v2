@@ -11,6 +11,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/verification',
     name: 'verification',
     component: import('@/views/Verification.vue')
+  },
+  {
+    path: '/not-vaccinated',
+    name: 'not-vaccinated',
+    component: import('@/views/Verification.vue')
   }
 ]
 

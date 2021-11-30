@@ -8,22 +8,27 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
 import QrScanner from 'qr-scanner';
 
 export default defineComponent({
-  emits: ['scanned'],
-  setup(_, {emit}) {
+  emits: [ 'scanned' ],
+  setup(_, { emit }) {
 
     const videoRef = ref<HTMLVideoElement | null>(null);
 
+    let scanner: QrScanner | null = null;
+
     onMounted(async () => {
-      console.log('MOunted')
-      const scanner = new QrScanner(videoRef.value as HTMLVideoElement, result => {
+      scanner = new QrScanner(videoRef.value as HTMLVideoElement, result => {
         if (result.length < 1) return;
-        emit('scanned', result)
+        emit('scanned', result);
       });
       await scanner.start();
+    });
+
+    onUnmounted(() => {
+      scanner?.stop();
     });
 
     return { videoRef };

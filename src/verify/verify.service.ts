@@ -1,5 +1,5 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { StartVerifyDto } from '../dtos/start-verify.dto';
+import { VerifyDto } from '../dtos/verify.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Member, MemberDocument } from '../schemas/member.schema';
 import { Model } from 'mongoose';
@@ -10,7 +10,10 @@ import { DateTime } from 'luxon';
 @Injectable()
 export class VerifyService {
 
-  constructor(private readonly visitsService: VisitsService, @InjectModel(Member.name) private memberModel: Model<MemberDocument>) {
+  constructor(
+    private readonly visitsService: VisitsService,
+    @InjectModel(Member.name) private memberModel: Model<MemberDocument>,
+  ) {
   }
 
   /**
@@ -44,38 +47,27 @@ export class VerifyService {
 
   /**
    * Verifies the provided Vaccine Pass data URI provided through
-   * {@link StartVerifyDto} using {@link verifyPassURI} and then adds
+   * {@link VerifyDto} using {@link verifyPassURI} and then adds
    * the details to the verified member list
    *
    * @throws {HttpException} Thrown if the Vaccine Pass credentials were incorrect or already verified
-   * @return {any} An empty JSON object on success
+   * @return {any} JSON object contains name & DOB on success
    */
-  async verify(startVerifyDto: StartVerifyDto) {
+  async verify(startVerifyDto: VerifyDto) {
     const result: VerificationResult = await verifyPassURI(startVerifyDto.data);
-
     // Error if the pass was not valid (provided incorrect qr?)
     if (!result.success) throw new HttpException(result.violates.message, 400);
-
     const credentials = result.credentialSubject;
     const name = this.transformName(credentials);
-
     // Check for existing members
-    if (await this.memberModel.findOne({ name })) {
+    const existingMember = await this.memberModel.findOne({ name });
+    if (existingMember) {
       throw new HttpException(
         'You have already verified your account please use the verified button instead. You do NOT need to repeat this process again',
         422,
       );
     }
-
     const dob = DateTime.fromISO(credentials.dob);
-
-    // Create New Verified Member
-    const newMember = new this.memberModel({ name, credentials, verifiedState: true, dob: dob.toJSDate() });
-    const member = await newMember.save();
-
-    // Creating Visit Entry
-    await this.visitsService.create({ member: member._id });
-
     // JSON response contains name & DOB on success
     return {
       name,
@@ -83,5 +75,21 @@ export class VerifyService {
     };
   }
 
+  async verifyConfirm(confirmVerify: VerifyDto) {
+    const result: VerificationResult = await verifyPassURI(confirmVerify.data);
+    // Error if the pass was not valid (provided incorrect qr?)
+    if (!result.success) throw new HttpException(result.violates.message, 400);
+    const credentials = result.credentialSubject;
+    const name = this.transformName(credentials);
+    // Check for existing members
+    const dob = DateTime.fromISO(credentials.dob);
+    // Create New Verified Member
+    const newMember = new this.memberModel({ name, credentials, verifiedState: true, dob: dob.toJSDate() });
+    const member = await newMember.save();
+    // Creating Visit Entry
+    await this.visitsService.create({ member: member._id });
+    // Empty JSON response on success
+    return {};
+  }
 
 }

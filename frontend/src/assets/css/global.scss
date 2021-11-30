@@ -30,4 +30,17 @@ $background: #1e1e1e;
   display: inline-block;
   color: white;
   text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+}
+
+.button-group {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
 }
