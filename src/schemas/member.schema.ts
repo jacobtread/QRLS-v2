@@ -12,6 +12,7 @@ export class Member {
   @Prop({ required: true, default: false }) verifiedState: boolean;
 
   @Prop({ type: Date, required: false }) dob: Date;
+  @Prop({ type: Date, required: false }) expiresAt: Date;
 
 }
 

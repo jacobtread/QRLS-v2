@@ -90,11 +90,19 @@ export class VerifyService {
     const name = this.transformName(credentials);
     // Check for existing members
     const dob = DateTime.fromISO(credentials.dob);
+    // TODO: When NZCP updates to include the expiry date replace this
+    const expiryDate = DateTime.now().plus({ month: 6 });
     // Create New Verified Member
-    const newMember = new this.memberModel({ name, credentials, verifiedState: true, dob: dob.toJSDate() });
+    const newMember = new this.memberModel({
+      name,
+      credentials,
+      verifiedState: true,
+      dob: dob.toJSDate(),
+      expiresAt: expiryDate.toJSDate(),
+    });
     const member = await newMember.save();
     // Creating Visit Entry
-    await this.visitsService.create({ member: member._id });
+    await this.visitsService.create({ member: member._id, guestName: name });
     // Empty JSON response on success
     return {};
   }
@@ -119,17 +127,25 @@ export class VerifyService {
       );
     }
 
+    // Ah yes lets hope this doesnt fail
+    const expiresAt = dob.plus({ years: 13.3 /* Rounded up to .3 cause yeah */ });
+
     // Create New Verified Member
-    const newMember = new this.memberModel({ name, verifiedState: false, dob: dob.toJSDate() });
+    const newMember = new this.memberModel({
+      name,
+      verifiedState: false,
+      dob: dob.toJSDate(),
+      expiresAt: expiresAt.toJSDate(),
+    });
     const member = await newMember.save();
     // Creating Visit Entry
-    await this.visitsService.create({ member: member._id });
+    await this.visitsService.create({ member: member._id, guestName: name });
     // Empty JSON response on success
     return {};
   }
 
   async getList(): Promise<Member[]> {
-    return this.memberModel.find({}, {'_id': 1, 'name': 1}).exec();
+    return this.memberModel.find({}, { '_id': 1, 'name': 1 }).exec();
   }
 
 }

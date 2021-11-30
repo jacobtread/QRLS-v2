@@ -4,6 +4,7 @@ import VerificationAge from '@/views/VerificationAge.vue';
 import VerificationU12 from '@/views/VerificationU12.vue';
 import VerificationO12 from '@/views/VerificationO12.vue';
 import Verified from '@/views/Verified.vue';
+import Admin from '@/views/Admin.vue';
 import { clearRedirect } from '../../tools';
 
 const routes: Array<RouteRecordRaw> = [
@@ -36,6 +37,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/verified',
     name: 'verified',
     component: Verified,
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: Admin,
   },
 ];
 

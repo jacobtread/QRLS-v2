@@ -8,7 +8,9 @@ import { VisitsModule } from '../visits/visits.module';
 @Module({
   imports: [
     VisitsModule,
-    MongooseModule.forFeature([ { name: Member.name, schema: MemberSchema } ]),
+    MongooseModule.forFeature([
+      { name: Member.name, schema: MemberSchema }
+    ]),
   ],
   controllers: [ VerifyController ],
   providers: [ VerifyService ],

@@ -95,7 +95,7 @@ export default defineComponent({
 
     const state = ref('initial');
 
-    const date = ref<DateTime | null>(DateTime.now());
+    const date = ref<DateTime>(DateTime.now());
     const name = ref('');
 
     const { push } = useRouter();
@@ -107,7 +107,6 @@ export default defineComponent({
     }
 
     function isValidDate(): boolean {
-      if (date.value == null) return false;
       const now = DateTime.now();
       const other = date.value as DateTime;
       const diff = Interval.fromDateTimes(other, now);

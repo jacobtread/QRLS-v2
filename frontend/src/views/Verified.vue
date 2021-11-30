@@ -37,7 +37,7 @@
       <p class='dialog__message'>
         You have been marked as attending for today. You can now head on in.
       </p>
-      <p class='dialog__message'>This will automatically close in 10 seconds</p>
+      <p class='dialog__message'>This will automatically close in 2 seconds</p>
       <div class='button-group'>
         <button class='button' @click='undo'>
           Undo
@@ -53,6 +53,17 @@
         You have already been marked as present today you do not need to mark yourself again.
         Please press the <b>Okay</b> button and we will
         take you back to the main page
+      </p>
+      <p class='dialog__message'>This message will automatically close in 10s</p>
+      <router-link class='button' :to='{name: "home"}'>
+        Okay
+      </router-link>
+    </Dialog>
+    <Dialog v-if='state === "verify-expired"'>
+      <h1 class='dialog__title'>Verification Expired</h1>
+      <p class='dialog__message'>
+        Your verification has expired. Please go through the verification process again in order
+        to be able to use this list. Press the <b>Okay</b> button to return to the main menu
       </p>
       <p class='dialog__message'>This message will automatically close in 10s</p>
       <router-link class='button' :to='{name: "home"}'>
@@ -147,12 +158,12 @@ export default defineComponent({
 
     function complete() {
       state.value = 'complete';
-      setRedirectIn('home', 10);
+      setRedirectIn('home', 2);
     }
 
     async function markAttendance(item: VerifyListItem) {
       state.value = 'loading';
-      lastMarked = item
+      lastMarked = item;
       try {
         clearRedirect();
         const timeStart = performance.now();
@@ -168,7 +179,10 @@ export default defineComponent({
           const { status } = e.response;
           if (status === 422) {
             state.value = 'already-marked';
-            resetTimer()
+            resetTimer();
+          } else if (status === 403) {
+            state.value = 'verify-expired';
+            resetTimer();
           }
         } else {
           state.value = 'error-message';
@@ -178,23 +192,23 @@ export default defineComponent({
 
     function selectIndex(index: number) {
       selected.value = index;
-      resetTimer()
+      resetTimer();
     }
 
-    resetTimer()
+    resetTimer();
 
     function undo() {
-      if(lastMarked != null) {
-        clearMarkedVerified(lastMarked._id)
-        state.value = 'initial'
-        resetTimer()
+      if (lastMarked != null) {
+        clearMarkedVerified(lastMarked._id);
+        state.value = 'initial';
+        resetTimer();
       }
     }
 
     return {
       name, inputKey, visibleMembers,
       done, selected, sortList, enterFocusRow,
-      selectIndex, state, undo
+      selectIndex, state, undo,
     };
   },
 });
