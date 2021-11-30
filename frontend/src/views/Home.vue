@@ -21,7 +21,7 @@
     </div>
     <div class='block section-buttons'>
       <h1>I am...</h1>
-      <router-link to='' class='section-button'>
+      <router-link :to='{name: "verified"}' class='section-button'>
         Verified
         <p class='section-button__desc'>
           If you have already gone through the verification process

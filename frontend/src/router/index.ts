@@ -31,6 +31,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'not-vaccinated',
     component: import('@/views/VerificationO12.vue'),
   },
+  {
+    path: '/verified',
+    name: 'verified',
+    component: import('@/views/Verified.vue'),
+  },
 ];
 
 const router = createRouter({

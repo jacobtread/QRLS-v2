@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { VerifyPassDto } from '../dtos/verify-pass.dto';
 import { VerifyService } from './verify.service';
 import { VerifyU12Dto } from '../dtos/verify-u12.dto';
@@ -22,6 +22,11 @@ export class VerifyController {
   @Post('u12')
   async verifyU12(@Body() data: VerifyU12Dto) {
     return await this.verifyService.verifyU12(data);
+  }
+
+  @Get('list')
+  async getList() {
+    return await this.verifyService.getList()
   }
 
 }

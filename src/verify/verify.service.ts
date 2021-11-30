@@ -128,4 +128,8 @@ export class VerifyService {
     return {};
   }
 
+  async getList(): Promise<Member[]> {
+    return this.memberModel.find({}, {'_id': 1, 'name': 1}).exec();
+  }
+
 }

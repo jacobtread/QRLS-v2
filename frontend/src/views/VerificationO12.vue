@@ -43,7 +43,6 @@
         </button>
       </div>
     </Dialog>
-
     <Dialog v-if='state === "complete"'>
       <h1 class='dialog__title'>Success!</h1>
       <p class='dialog__message'>
@@ -58,7 +57,6 @@
         Close
       </router-link>
     </Dialog>
-
     <Dialog v-if='state === "invalid-code"'>
       <h1 class='dialog__title'>Incorrect Code</h1>
       <p class='dialog__message'>
@@ -77,17 +75,17 @@
         </router-link>
       </div>
     </Dialog>
-
     <Dialog v-if='state === "error-message"'>
       <h1 class='dialog__title'>Error</h1>
       <p class='dialog__message'>
-        {{ error }}
+        An unknown error occurred when attempting to verify your Vaccine Pass.
+        Please push the retry button to try again. If this problem persists please
+        find a facilitator and let them know about the problem.
       </p>
       <button class='button' @click='state = "scanning"'>
         Retry
       </button>
     </Dialog>
-
     <Dialog v-if='state === "already-verified"'>
       <h1 class='dialog__title'>You are already Verified</h1>
       <p class='dialog__message'>
@@ -157,11 +155,6 @@ export default defineComponent({
           }
         } else {
           state.value = 'error-message';
-          error.value = `
-          An unknown error occurred when attempting to verify your Vaccine Pass.
-          Please push the retry button to try again. If this problem persists please
-          find a facilitator and let them know about the problem.
-          `;
         }
       }
     }
@@ -192,17 +185,12 @@ export default defineComponent({
           const { status } = e.response;
           if (status === 422) {
             state.value = 'already-verified';
-            setRedirectIn('home', 10)
+            setRedirectIn('home', 10);
           } else if (status === 400) {
             state.value = 'invalid-code';
           }
         } else {
           state.value = 'error-message';
-          error.value = `
-          An unknown error occurred when attempting to verify your Vaccine Pass.
-          Please push the retry button to try again. If this problem persists please
-          find a facilitator and let them know about the problem.
-          `;
         }
       }
     }
@@ -231,6 +219,7 @@ export default defineComponent({
     color: white;
     font-weight: bold;
   }
+
   &__value {
     color: #888;
   }
