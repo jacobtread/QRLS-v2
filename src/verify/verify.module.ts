@@ -6,7 +6,10 @@ import { Member, MemberSchema } from '../schemas/member.schema';
 import { VisitsModule } from '../visits/visits.module';
 
 @Module({
-  imports: [ MongooseModule.forFeature([ { name: Member.name, schema: MemberSchema } ]), VisitsModule ],
+  imports: [
+    VisitsModule,
+    MongooseModule.forFeature([ { name: Member.name, schema: MemberSchema } ]),
+  ],
   controllers: [ VerifyController ],
   providers: [ VerifyService ],
 })

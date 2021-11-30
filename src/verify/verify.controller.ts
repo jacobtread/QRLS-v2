@@ -8,9 +8,9 @@ export class VerifyController {
   constructor(private verifyService: VerifyService) {
   }
 
-  @Post('start')
-  async startVerify(@Body() data: StartVerifyDto) {
-    return await this.verifyService.startVerify(data)
+  @Post()
+  async verify(@Body() data: StartVerifyDto) {
+    return await this.verifyService.verify(data)
   }
 
 }

@@ -40,12 +40,20 @@ export default defineComponent({
       showLoader.value = true;
       console.log('YES');
       const timeStart = performance.now();
-      const { data } = await startVerify(uri);
-      const duration = performance.now() - timeStart;
-      if (duration < 3000) {
-        setTimeout(nextStep, 3000 - duration);
-      } else {
-        await nextStep();
+
+      try {
+
+        const { data } = await startVerify(uri);
+
+        const duration = performance.now() - timeStart;
+        if (duration < 3000) {
+          setTimeout(nextStep, 3000 - duration);
+        } else {
+          await nextStep();
+        }
+
+      } catch (e) {
+
       }
     }
 

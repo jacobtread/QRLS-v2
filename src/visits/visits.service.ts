@@ -6,6 +6,7 @@ import { CreateVisitDto } from '../dtos/create-visit.dto';
 
 @Injectable()
 export class VisitsService {
+
   constructor(@InjectModel(Visit.name) private visitModel: Model<VisitDocument>) {
   }
 
