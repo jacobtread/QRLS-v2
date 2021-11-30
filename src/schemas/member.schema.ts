@@ -11,6 +11,8 @@ export class Member {
   @Prop({ type: VerifiedCredentialsSchema, required: false }) credentials: VerifiedCredentials;
   @Prop({ required: true, default: false }) verifiedState: boolean;
 
+  @Prop({ type: Date, required: false }) dob: string;
+
 }
 
 export const MemberSchema = SchemaFactory.createForClass(Member);

@@ -17,6 +17,8 @@
     <div class='block'>
       <QRScanner @scanned='completeScan' v-if='showScanner' />
     </div>
+    <Loader :loading='showLoader' title='Verifying Pass'
+            message='Please wait while we verify that your vaccine pass is valid' />
   </div>
 </template>
 
@@ -24,27 +26,35 @@
 import { defineComponent, ref } from 'vue';
 import QRScanner from '@/components/QRScanner.vue';
 import Logo from '@/assets/logo.svg?inline';
+import { startVerify } from '@/api/verify';
+import Loader from '@/components/Loader.vue';
 
 export default defineComponent({
-  components: { QRScanner, Logo },
+  components: { Loader, QRScanner, Logo },
   setup() {
-
+    const showLoader = ref(false);
     const showScanner = ref(true);
 
-    async function completeScan(data: string) {
-      showScanner.value = false
-      const response = await fetch('http://localhost:3000/api/verify/start', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ data }),
-      });
-      console.log(await response.json());
+    async function completeScan(uri: string) {
+      showScanner.value = false;
+      showLoader.value = true;
+      console.log('YES');
+      const timeStart = performance.now();
+      const { data } = await startVerify(uri);
+      const duration = performance.now() - timeStart;
+      if (duration < 3000) {
+        setTimeout(nextStep, 3000 - duration);
+      } else {
+        await nextStep();
+      }
     }
 
-    return { showScanner, completeScan };
+    async function nextStep() {
+      showLoader.value = false;
+
+    }
+
+    return { showScanner, showLoader, completeScan };
   },
 });
 </script>

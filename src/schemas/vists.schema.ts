@@ -8,7 +8,8 @@ export type VisitDocument = Visit & Document
 @Schema()
 export class Visit {
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'VerifiedMember' }) member: Member;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'VerifiedMember', required: false }) member: Member;
+  @Prop({required: false}) guestName: string
   @Prop({ type: Date, required: true }) date: Date;
 
 }
