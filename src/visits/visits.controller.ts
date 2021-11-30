@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
 import { Visit } from '../schemas/vists.schema';
 import { VisitsService } from './visits.service';
-import { CreateVisitDto } from '../dtos/create-visit.dto';
+import { VisitDto } from '../dtos/visit.dto';
 
 @Controller('visits')
 export class VisitsController {
@@ -14,9 +14,15 @@ export class VisitsController {
     return this.visitsService.findAll();
   }
 
-  @Post('create')
-  async createVisit(@Body() createVisitDto: CreateVisitDto) {
+  @Post()
+  async createVisit(@Body() createVisitDto: VisitDto) {
     return await this.visitsService.create(createVisitDto);
+  }
+
+  @Delete()
+  async deleteVisit(@Body() visitDto: VisitDto) {
+    await this.visitsService.remove(visitDto)
+    return {}
   }
 
 }

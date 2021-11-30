@@ -29,6 +29,7 @@ export default defineComponent({
 
     onUnmounted(() => {
       scanner?.stop();
+      scanner?.destroy()
     });
 
     return { videoRef };

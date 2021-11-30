@@ -12,7 +12,7 @@ export const getList = async (): Promise<VerifyList> => {
   const now = performance.now();
   if (now > verifiedListExpires) {
     const { data } = await axios.get<VerifyList>('verify/list');
-    verifiedListExpires = performance.now() + 10 * 60 * 1000;
+    verifiedListExpires = performance.now() + 60 * 1000;
     verifiedList = data;
     return data;
   } else {

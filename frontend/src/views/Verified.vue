@@ -5,7 +5,9 @@
       <h1 class='content__title'>Enter Your Name</h1>
       <p class='content__text'>If you have not verified yourself yet please use the <b>Not Verified</b> or <b>Not
         Vaccinated</b> buttons
-        instead otherwise your name will not appear in this list
+        instead otherwise your name will not appear in this list. Pressing enter will select the first
+        person in the list. You can also click a person and hit enter to select them otherwise you can select them and
+        push the <b>Done</b> button
       </p>
       <input
         class='input' type='text'
@@ -36,9 +38,14 @@
         You have been marked as attending for today. You can now head on in.
       </p>
       <p class='dialog__message'>This will automatically close in 10 seconds</p>
-      <router-link :to='{name: "home"}' class='button'>
-        Close
-      </router-link>
+      <div class='button-group'>
+        <button class='button' @click='undo'>
+          Undo
+        </button>
+        <router-link :to='{name: "home"}' class='button'>
+          Close
+        </router-link>
+      </div>
     </Dialog>
     <Dialog v-if='state === "already-marked"'>
       <h1 class='dialog__title'>You are already marked for today</h1>
@@ -72,7 +79,7 @@ import { getList } from '@/api/verify';
 import Logo from '@/assets/logo.svg?inline';
 import { clearRedirect, setRedirectIn } from '../../tools';
 import Loader from '@/components/Loader.vue';
-import { markVisitVerified } from '@/api/visit';
+import { clearMarkedVerified, markVisitVerified } from '@/api/visit';
 import Dialog from '@/components/Dialog.vue';
 
 export default defineComponent({
@@ -87,6 +94,8 @@ export default defineComponent({
     const visibleMembers = ref<VerifyList>([]);
 
     const state = ref('initial');
+
+    let lastMarked: VerifyListItem | null = null;
 
     function sortList() {
       resetTimer();
@@ -130,8 +139,10 @@ export default defineComponent({
       }
     }
 
-    function done() {
-
+    async function done() {
+      if (selected.value === -1) return;
+      const item = visibleMembers.value[selected.value];
+      await markAttendance(item);
     }
 
     function complete() {
@@ -141,13 +152,14 @@ export default defineComponent({
 
     async function markAttendance(item: VerifyListItem) {
       state.value = 'loading';
+      lastMarked = item
       try {
         clearRedirect();
         const timeStart = performance.now();
         await markVisitVerified(item._id);
         const duration = performance.now() - timeStart;
-        if (duration < 2000) {
-          setTimeout(complete, 2000 - duration);
+        if (duration < 1000) {
+          setTimeout(complete, 1000 - duration);
         } else {
           complete();
         }
@@ -156,7 +168,7 @@ export default defineComponent({
           const { status } = e.response;
           if (status === 422) {
             state.value = 'already-marked';
-            setRedirectIn('home', 10);
+            resetTimer()
           }
         } else {
           state.value = 'error-message';
@@ -166,15 +178,23 @@ export default defineComponent({
 
     function selectIndex(index: number) {
       selected.value = index;
-      setRedirectIn('home', 10);
+      resetTimer()
     }
 
-    setRedirectIn('home', 10);
+    resetTimer()
+
+    function undo() {
+      if(lastMarked != null) {
+        clearMarkedVerified(lastMarked._id)
+        state.value = 'initial'
+        resetTimer()
+      }
+    }
 
     return {
       name, inputKey, visibleMembers,
       done, selected, sortList, enterFocusRow,
-      selectIndex, state
+      selectIndex, state, undo
     };
   },
 });
