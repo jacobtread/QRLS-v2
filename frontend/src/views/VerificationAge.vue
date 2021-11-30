@@ -2,32 +2,19 @@
   <div class='age'>
     <div class='block'>
       <Logo class='logo' />
-
-      <p class='mandate'>
-        <template v-if='mandate'>Vaccine Verification is currently Mandatory</template>
-        <template v-else>Vaccine Verification is currently not mandatory</template>
-      </p>
-
-      <p v-if='mandate' class='mandate__desc'>We are required to verify your vaccination pass</p>
-
-      <p class='description'>
-        Welcome to <b>Questionable Research Labs</b> if you are under 12 years <span>(+3 months)</span> old please push
-        the button with the
-        title <b>Under 12 Years</b> if you are <b>Not</b> Vaccinated please push the <b>Not Vaccinated</b> Button.
-        If you are Vaccinated and have already verified your Vaccine Pass click the <b>Already Verified</b> Button.
-        Otherwise push the <b>Not Verified</b> button
-
-      </p>
+      <router-link :to='{name: "home"}' class='button back'>
+        Go Back
+      </router-link>
     </div>
     <div class='block section-buttons'>
       <h1>I am...</h1>
-      <router-link to='' class='section-button'>
+      <router-link :to='{name: "verification-u12"}' class='section-button'>
         Under 12 Years Old
         <p class='section-button__desc'>
           If you are under 12 Years <span>(+3 months)</span> old
         </p>
       </router-link>
-      <router-link :to='{name: "verification-u12"}' class='section-button'>
+      <router-link :to='{name: "verification-o12"}' class='section-button'>
         Over 12 Years Old
         <p class='section-button__desc'>
           If you are over 12 Years <span>(+3 months)</span> old
@@ -70,7 +57,7 @@ export default defineComponent({
   }
 }
 
-.home {
+.age {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
