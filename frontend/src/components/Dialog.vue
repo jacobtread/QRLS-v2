@@ -42,7 +42,7 @@ export default defineComponent({
   &__logo {
     height: 100px;
     display: block;
-    margin: 2rem auto 0rem;
+    margin: 2rem auto 0;
   }
 
   :deep(.dialog__title) {
