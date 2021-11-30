@@ -1,5 +1,5 @@
 <template>
-  <div class='age'>
+  <div class='content'>
     <div class='block'>
       <Logo class='logo' />
       <router-link :to='{name: "home"}' class='button back'>
@@ -57,7 +57,7 @@ export default defineComponent({
   }
 }
 
-.age {
+.content {
   display: flex;
   justify-content: space-evenly;
   align-items: center;

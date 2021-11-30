@@ -1,5 +1,5 @@
 <template>
-  <div class='dialog-wrapper' v-if='visible'>
+  <div class='dialog-wrapper'>
     <div class='dialog'>
       <slot />
       <Logo class='dialog__logo' />
@@ -13,7 +13,7 @@ import Logo from '@/assets/logo.svg?inline';
 
 export default defineComponent({
   components: { Logo },
-  props: { visible: Boolean, title: String, message: String },
+  props: { title: String, message: String },
   setup() {
   },
 });

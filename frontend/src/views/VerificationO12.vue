@@ -1,5 +1,5 @@
 <template>
-  <div class='verify'>
+  <div class='content'>
     <div class='block'>
       <Logo class='logo' />
 
@@ -17,11 +17,11 @@
     <div class='block'>
       <QRScanner @scanned='completeScan' v-if='state === "scanning"' />
     </div>
-    <Loader :loading='state === "loading"' title='Verifying Pass'
+    <Loader v-if='state === "loading"' title='Verifying Pass'
             message='Please wait while we verify that your vaccine pass is valid' />
-    <Loader :loading='state === "loading-confirm"' title='Confirming'
+    <Loader v-if='state === "loading-confirm"' title='Confirming'
             message='We are confirming your verification please wait...' />
-    <Dialog :visible='state === "confirm"'>
+    <Dialog v-if='state === "confirm"'>
       <h1 class='dialog__title'>Confirm Details</h1>
       <p class='dialog__message'>Please confirm that the following details are correct</p>
 
@@ -44,7 +44,7 @@
       </div>
     </Dialog>
 
-    <Dialog :visible='state === "complete"'>
+    <Dialog v-if='state === "complete"'>
       <h1 class='dialog__title'>Success!</h1>
       <p class='dialog__message'>
         We have successfully verified your Vaccine Pass you have automatically been marked
@@ -59,7 +59,7 @@
       </router-link>
     </Dialog>
 
-    <Dialog :visible='state === "invalid-code"'>
+    <Dialog v-if='state === "invalid-code"'>
       <h1 class='dialog__title'>Incorrect Code</h1>
       <p class='dialog__message'>
         It seems that the QR code you scanned isn't a valid Vaccine Pass Code. Please make
@@ -78,7 +78,7 @@
       </div>
     </Dialog>
 
-    <Dialog :visible='state === "error-message"'>
+    <Dialog v-if='state === "error-message"'>
       <h1 class='dialog__title'>Error</h1>
       <p class='dialog__message'>
         {{ error }}
@@ -88,7 +88,7 @@
       </button>
     </Dialog>
 
-    <Dialog :visible='state === "already-verified"'>
+    <Dialog v-if='state === "already-verified"'>
       <h1 class='dialog__title'>You are already Verified</h1>
       <p class='dialog__message'>
         You have already been <b>Verified</b> in our system. You do not have to verify again.
@@ -261,7 +261,7 @@ export default defineComponent({
   }
 }
 
-.verify {
+.content {
   display: flex;
   justify-content: space-evenly;
   align-items: center;

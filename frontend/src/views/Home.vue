@@ -1,5 +1,5 @@
 <template>
-  <div class='home'>
+  <div class='content'>
     <div class='block'>
       <Logo class='logo' />
 
@@ -83,7 +83,7 @@ export default defineComponent({
   }
 }
 
-.home {
+.content {
   display: flex;
   justify-content: space-evenly;
   align-items: center;

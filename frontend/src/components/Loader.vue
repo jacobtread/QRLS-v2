@@ -1,5 +1,5 @@
 <template>
-  <div class='loader-wrapper' v-if='loading'>
+  <div class='loader-wrapper'>
     <div class='loader'>
       <div class='loader__spinner'></div>
       <h1 class='loader__title'>{{ title }}</h1>
@@ -15,7 +15,7 @@ import Logo from '@/assets/logo.svg?inline';
 
 export default defineComponent({
   components: { Logo },
-  props: { loading: Boolean, title: String, message: String },
+  props: { title: String, message: String },
   setup() {
   },
 });

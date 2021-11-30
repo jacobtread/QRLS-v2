@@ -44,3 +44,19 @@ $background: #1e1e1e;
   gap: 1rem;
   justify-content: center;
 }
+
+.input {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: #333;
+  border: none;
+  outline: 2px solid #444;
+  width: 100%;
+  font-size: 1.25rem;
+  color: white;
+  border-radius: 0.25rem;
+
+  &:hover, &:focus {
+    outline: 2px solid #888;
+  }
+}
