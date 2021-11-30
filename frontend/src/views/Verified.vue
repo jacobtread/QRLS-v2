@@ -170,7 +170,7 @@ export default defineComponent({
 
     setRedirectIn('home', 10);
 
-    return { name, inputKey, visibleMembers, selected, sortList, enterFocusRow, selectIndex };
+    return { name, inputKey, visibleMembers, selected, sortList, enterFocusRow, selectIndex, state };
   },
 });
 </script>

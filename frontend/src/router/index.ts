@@ -3,6 +3,7 @@ import Home from '../views/Home.vue';
 import VerificationAge from '@/views/VerificationAge.vue';
 import VerificationU12 from '@/views/VerificationU12.vue';
 import VerificationO12 from '@/views/VerificationO12.vue';
+import Verified from '@/views/Verified.vue';
 import { clearRedirect } from '../../tools';
 
 const routes: Array<RouteRecordRaw> = [
@@ -29,12 +30,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/not-vaccinated',
     name: 'not-vaccinated',
-    component: import('@/views/VerificationO12.vue'),
+    component: VerificationO12,
   },
   {
     path: '/verified',
     name: 'verified',
-    component: import('@/views/Verified.vue'),
+    component: Verified,
   },
 ];
 
