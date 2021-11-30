@@ -164,6 +164,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 
   &__title {
     margin-bottom: 1rem;
@@ -173,7 +174,7 @@ export default defineComponent({
     line-height: 1.5;
     font-size: 1.25rem;
     max-width: 700px;
-    margin-bottom: 1rem;
+    margin: 1rem auto;
     color: #999;
   }
 

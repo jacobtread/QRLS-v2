@@ -54,7 +54,7 @@ export default defineComponent({
     font-size: 1.5rem;
     max-width: 500px;
     color: #999;
-    margin-bottom: 1em;
+    margin: 1rem auto;
   }
 }
 
