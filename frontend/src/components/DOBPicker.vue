@@ -35,21 +35,31 @@ export default defineComponent({
     });
 
     const years = possibleYears();
-    const months = possibleMonths();
+    const months = ref(possibleMonths());
     const days = ref(possibleDays());
 
     watch(date, () => days.value = possibleDays());
+    watch(date, () => months.value = possibleMonths());
 
     function possibleYears() {
       return listOfNumbers(2003, now.getFullYear());
     }
 
     function possibleMonths() {
+      if (date.year == now.getFullYear()) {
+        const cm = now.getMonth() + 1;
+        if (date.month > cm) date.month = cm;
+        return listOfNumbers(1, cm);
+      }
       return listOfNumbers(1, 12);
     }
 
     function possibleDays() {
-      const total = new Date(date.year, date.month, 0).getDate();
+      let total = new Date(date.year, date.month, 0).getDate();
+      const cd = now.getDate();
+      if (date.year == now.getFullYear() && date.month == now.getMonth()) {
+        if (total > cd) total = cd;
+      }
       if (date.date > total) date.date = total;
       return listOfNumbers(1, total);
     }

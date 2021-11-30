@@ -52,7 +52,7 @@
         You may now enter the building.
       </p>
 
-      <p class='dialog__message'>This will automatically close in 10 seconds</p>
+      <p class='dialog__message'>This message will automatically close in 10s</p>
 
       <router-link :to='{name: "home"}' class='button'>
         Close
