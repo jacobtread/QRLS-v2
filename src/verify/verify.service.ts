@@ -1,11 +1,12 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { VerifyDto } from '../dtos/verify.dto';
+import { VerifyPassDto } from '../dtos/verify-pass.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Member, MemberDocument } from '../schemas/member.schema';
 import { Model } from 'mongoose';
 import { CredentialSubject, VerificationResult, verifyPassURI } from '@vaxxnz/nzcp';
 import { VisitsService } from '../visits/visits.service';
 import { DateTime } from 'luxon';
+import { VerifyU12Dto } from '../dtos/verify-u12.dto';
 
 @Injectable()
 export class VerifyService {
@@ -47,23 +48,22 @@ export class VerifyService {
 
   /**
    * Verifies the provided Vaccine Pass data URI provided through
-   * {@link VerifyDto} using {@link verifyPassURI} and then adds
-   * the details to the verified member list
+   * {@link VerifyPassDto} using {@link verifyPassURI} and sends
+   * back the name and DOB
    *
    * @throws {HttpException} Thrown if the Vaccine Pass credentials were incorrect or already verified
-   * @return {any} JSON object contains name & DOB on success
+   * @return {any} Empty JSON object on success
    */
-  async verify(startVerifyDto: VerifyDto) {
+  async verify(startVerifyDto: VerifyPassDto) {
     const result: VerificationResult = await verifyPassURI(startVerifyDto.data);
     // Error if the pass was not valid (provided incorrect qr?)
     if (!result.success) throw new HttpException(result.violates.message, 400);
     const credentials = result.credentialSubject;
     const name = this.transformName(credentials);
     // Check for existing members
-    const existingMember = await this.memberModel.findOne({ name });
-    if (existingMember) {
+    if (await this.memberModel.findOne({ name })) {
       throw new HttpException(
-        'You have already verified your account please use the verified button instead. You do NOT need to repeat this process again',
+        'You have already verified your vaccine pass please use the verified button instead. You do NOT need to repeat this process again',
         422,
       );
     }
@@ -75,7 +75,14 @@ export class VerifyService {
     };
   }
 
-  async verifyConfirm(confirmVerify: VerifyDto) {
+  /**
+   * Called when the client confirms that the Vaccine Pass
+   * information is valid
+   *
+   * @throws {HttpException} Thrown if the Vaccine Pass credentials were incorrect
+   * @return {any} Empty JSON object on success
+   */
+  async verifyConfirm(confirmVerify: VerifyPassDto) {
     const result: VerificationResult = await verifyPassURI(confirmVerify.data);
     // Error if the pass was not valid (provided incorrect qr?)
     if (!result.success) throw new HttpException(result.violates.message, 400);
@@ -85,6 +92,35 @@ export class VerifyService {
     const dob = DateTime.fromISO(credentials.dob);
     // Create New Verified Member
     const newMember = new this.memberModel({ name, credentials, verifiedState: true, dob: dob.toJSDate() });
+    const member = await newMember.save();
+    // Creating Visit Entry
+    await this.visitsService.create({ member: member._id });
+    // Empty JSON response on success
+    return {};
+  }
+
+  /**
+   * Verifies and creates a visit for the provided under 12 year old
+   * stores the provided name and DOB
+   *
+   * @throws {HttpException} Thrown if the Vaccine Pass credentials were incorrect
+   * @return {any} Empty JSON object on success
+   */
+  async verifyU12(verifyDto: VerifyU12Dto) {
+
+    const name = this.toUpper(verifyDto.name);
+    const dob = DateTime.fromISO(verifyDto.dob);
+
+    // Check for existing members
+    if (await this.memberModel.findOne({ name })) {
+      throw new HttpException(
+        'Your name is already verified! Please use the verified button to login instead',
+        422,
+      );
+    }
+
+    // Create New Verified Member
+    const newMember = new this.memberModel({ name, verifiedState: true, dob: dob.toJSDate() });
     const member = await newMember.save();
     // Creating Visit Entry
     await this.visitsService.create({ member: member._id });

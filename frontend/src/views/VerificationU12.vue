@@ -23,7 +23,7 @@ import Dialog from '@/components/Dialog.vue';
 import DOBPicker from '@/components/DOBPicker.vue';
 
 import { DateTime, Interval } from 'luxon';
-import { confirmVerify } from '@/api/verify';
+import { verifyU12 } from '@/api/verify';
 
 export default defineComponent({
   components: { DOBPicker, Dialog, Loader, Logo },
@@ -33,6 +33,8 @@ export default defineComponent({
 
     const date = ref<DateTime | null>(null);
     const name = ref('');
+
+    const error = ref('')
 
     function changeDate(data: DateTime) {
       date.value = data;
@@ -49,9 +51,36 @@ export default defineComponent({
       return years <= 12.3; // added the extra .05 because floating points go yes
     }
 
+    function complete() {
+
+    }
+
     async function verify() {
       state.value = 'loading';
-
+      try {
+        const timeStart = performance.now();
+        await verifyU12(name.value, date.value as DateTime);
+        const duration = performance.now() - timeStart;
+        if (duration < 2000) {
+          setTimeout(complete, 2000 - duration);
+        } else {
+          complete();
+        }
+      } catch (e: any) {
+        if (e.response) {
+          const { status } = e.response;
+          if (status === 422) {
+            state.value = 'already-verified';
+          }
+        } else {
+          state.value = 'error-message';
+          error.value = `
+          An unknown error occurred when attempting to verify your Vaccine Pass.
+          Please push the retry button to try again. If this problem persists please
+          find a facilitator and let them know about the problem.
+          `;
+        }
+      }
     }
 
     return { date, changeDate, name, verify, state };

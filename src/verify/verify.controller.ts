@@ -1,6 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { VerifyDto } from '../dtos/verify.dto';
+import { VerifyPassDto } from '../dtos/verify-pass.dto';
 import { VerifyService } from './verify.service';
+import { VerifyU12Dto } from '../dtos/verify-u12.dto';
 
 @Controller('verify')
 export class VerifyController {
@@ -9,13 +10,18 @@ export class VerifyController {
   }
 
   @Post()
-  async verify(@Body() data: VerifyDto) {
+  async verify(@Body() data: VerifyPassDto) {
     return await this.verifyService.verify(data);
   }
 
   @Post('confirm')
-  async verifyConfirm(@Body() data: VerifyDto) {
+  async verifyConfirm(@Body() data: VerifyPassDto) {
     return await this.verifyService.verifyConfirm(data);
+  }
+
+  @Post('u12')
+  async verifyU12(@Body() data: VerifyU12Dto) {
+    return await this.verifyService.verifyU12(data);
   }
 
 }
