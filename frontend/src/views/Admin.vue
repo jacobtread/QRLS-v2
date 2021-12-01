@@ -10,7 +10,7 @@
       If you are not supposed to be accessing this menu please push the close button at the top of your screen and you
       will be taken back to the normal setup
     </p>
-    <Checkbox text='Vaccination Status Mandatory' v-model='mandate' />
+    <Checkbox text='Vaccination Status Mandatory' v-model='mandate' @submit.prevent='addMember' />
     <form class='setting'>
       <h2 class='setting__title'>Manual Member Add</h2>
       <p class='setting__desc'>
@@ -41,6 +41,7 @@ import Checkbox from '@/components/Checkbox.vue';
 import { useStore } from 'vuex';
 import DOBPicker from '@/components/DOBPicker.vue';
 import { DateTime, Interval } from 'luxon';
+import { addMemberAdmin } from '@/api/admin';
 
 export default defineComponent({
   components: { DOBPicker, Checkbox },
@@ -55,16 +56,22 @@ export default defineComponent({
 
     watch(date, () => console.log(date));
 
-    function addMember() {
+    async function addMember() {
       const name = fullName.value;
       const dob = date.value;
+      try {
+        await addMemberAdmin(name, dob)
+      } catch (e) {
+
+      }
+
     }
 
     function setNotVaccinatedMessage() {
       const message = nvMessage.value;
     }
 
-    return { mandate, date, fullName, nvMessage };
+    return { mandate, date, fullName, nvMessage, addMember };
   },
 });
 </script>

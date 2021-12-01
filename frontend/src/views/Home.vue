@@ -136,7 +136,7 @@ export default defineComponent({
 
   &:active {
     transition: all 0.1s ease;
-    transform: scale(0.9);
+    transform: scale(0.99);
   }
 }
 

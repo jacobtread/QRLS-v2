@@ -8,6 +8,11 @@ interface VerifyListItem {
   name: string;
 }
 
+interface Settings {
+  mandate: boolean;
+  nvMessage: string;
+}
+
 type VerifyList = Array<VerifyListItem>
 
 interface Error {

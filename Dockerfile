@@ -1,22 +1,30 @@
-FROM node:14-alpine3.12 as production
-
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
+FROM node:14-alpine3.12 as backend-build
 
 WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN npm install --only=production
-
-COPY . .
-
+COPY backend/package.json package.json
+RUN npm install
+COPY backend .
 RUN npm run build
 
-COPY /usr/src/app/dist ./dist
+FROM node:14-alpine3.12 as frontend-build
 
-RUN cd frontend && npm run build
+WORKDIR /usr/src/app
+COPY frontend/package.json package.json
+RUN npm install
+COPY frontend .
+RUN npm run build
 
-COPY /user/src/app/public ./public
+FROM node:14-alpine3.12 as run
 
-CMD ["node", "dist/main"]
+WORKDIR /usr/src/app/dist
+
+COPY --from=backend-build /usr/src/app/dist .
+COPY --from=frontend-build /usr/src/app/dist ./public
+
+COPY backend/package.json package.json
+
+RUN npm install --production
+
+EXPOSE 3000
+
+CMD ["node", "main"]

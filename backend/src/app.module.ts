@@ -12,7 +12,7 @@ import { VerifyModule } from './verify/verify.module';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({ rootPath: join(__dirname, '..', 'public') }),
+    ServeStaticModule.forRoot({ rootPath: join(__dirname, 'public') }),
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.DATABASE_URL),
     VisitsModule,

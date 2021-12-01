@@ -2,11 +2,13 @@ import { createStore } from 'vuex'
 
 interface State {
   mandate: boolean;
+  nvMessage: string;
 }
 
 export default createStore<State>({
   state: {
-    mandate: true
+    mandate: true,
+    nvMessage: '',
   },
   mutations: {
   },

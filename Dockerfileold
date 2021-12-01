@@ -1,0 +1,38 @@
+FROM node:14-alpine3.12 as backend-build
+WORKDIR /
+
+COPY backend/package.json backend/package.json
+
+WORKDIR /backend
+
+RUN npm install
+
+COPY backend .
+
+RUN npm run build
+
+COPY /dist /app
+
+WORKDIR /
+
+COPY frontend/package.json frontend/package.json
+
+WORKDIR frontend
+
+RUN npm install
+
+COPY frontend .
+
+RUN npm run build
+
+COPY /dist /app/public
+
+WORKDIR /app
+
+COPY backend/package.json .
+
+RUN npm install --production
+
+EXPOSE 3000
+
+CMD ["node", "main"]
