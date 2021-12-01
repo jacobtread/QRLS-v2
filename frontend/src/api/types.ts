@@ -13,7 +13,14 @@ interface Settings {
   nvMessage: string;
 }
 
-type VerifyList = Array<VerifyListItem>
+interface VisitListItem {
+  _id: string;
+  member: string;
+  guestName: string;
+}
+
+type VisitList = Array<VisitListItem>;
+type VerifyList = Array<VerifyListItem>;
 
 interface Error {
   statusCode: number;

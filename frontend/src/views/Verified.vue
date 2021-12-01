@@ -167,7 +167,7 @@ export default defineComponent({
       try {
         clearRedirect();
         const timeStart = performance.now();
-        await markVisitVerified(item._id);
+        await markVisitVerified(item._id, item.name);
         const duration = performance.now() - timeStart;
         if (duration < 1000) {
           setTimeout(complete, 1000 - duration);

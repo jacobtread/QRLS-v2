@@ -12,8 +12,13 @@ export class VisitsService {
   constructor(@InjectModel(Visit.name) private visitModel: Model<VisitDocument>, @InjectModel(Member.name) private memberModel: Model<MemberDocument>) {
   }
 
+  async getForToday(visitDto: VisitDto) {
+
+  }
+
   async create(visitDto: VisitDto) {
-    const date = DateTime.now().toISODate();
+    const now = DateTime.now();
+    const date = now.toISODate();
     if (await this.visitModel.findOne({ ...visitDto, date })) {
       throw new HttpException(
         'You are already marked as attending today',
@@ -38,7 +43,7 @@ export class VisitsService {
       }
     }
 
-    const createdVisit = new this.visitModel({ ...visitDto, date });
+    const createdVisit = new this.visitModel({ ...visitDto, date, time: now.toISOTime() });
     return createdVisit.save();
   }
 
@@ -49,6 +54,10 @@ export class VisitsService {
 
   async findAll(): Promise<Visit[]> {
     return this.visitModel.find().exec();
+  }
+
+  async allForDate(date: DateTime) {
+    return this.visitModel.find({ date: date.toISODate() }).exec();
   }
 
 }

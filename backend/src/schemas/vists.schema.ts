@@ -11,6 +11,7 @@ export class Visit {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'VerifiedMember', required: false }) member: string;
   @Prop({ required: false }) guestName: string;
   @Prop({ required: true }) date: string;
+  @Prop({ required: true }) time: string;
 
 }
 

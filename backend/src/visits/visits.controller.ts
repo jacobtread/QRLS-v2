@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
 import { Visit } from '../schemas/vists.schema';
 import { VisitsService } from './visits.service';
 import { VisitDto } from '../dtos/visit.dto';
+import { DateTime } from 'luxon';
 
 @Controller('visits')
 export class VisitsController {
@@ -10,8 +11,8 @@ export class VisitsController {
   }
 
   @Get()
-  async findAll(): Promise<Visit[]> {
-    return this.visitsService.findAll();
+  async findAll(@Query('date') date: string): Promise<Visit[]> {
+    return this.visitsService.allForDate(DateTime.fromISO(date));
   }
 
   @Post()
@@ -21,8 +22,9 @@ export class VisitsController {
 
   @Delete()
   async deleteVisit(@Body() visitDto: VisitDto) {
-    await this.visitsService.remove(visitDto)
-    return {}
+    await this.visitsService.remove(visitDto);
+    return {};
   }
+
 
 }

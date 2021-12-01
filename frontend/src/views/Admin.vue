@@ -5,12 +5,15 @@
       <router-link :to='{name: "home"}' class='button'>
         Close
       </router-link>
+      <router-link :to='{name: "attendance"}' class='button'>
+        View Attendance
+      </router-link>
     </h1>
     <p class='content__description'>
       If you are not supposed to be accessing this menu please push the close button at the top of your screen and you
       will be taken back to the normal setup
     </p>
-    <Checkbox text='Vaccination Status Mandatory' v-model='mandate' @submit.prevent='addMember' />
+    <Checkbox text='Vaccination Verification Mandatory' v-model='mandate' @submit.prevent='addMember' />
     <form class='setting'>
       <h2 class='setting__title'>Manual Member Add</h2>
       <p class='setting__desc'>

@@ -6,6 +6,7 @@ import VerificationO12 from '@/views/VerificationO12.vue';
 import Verified from '@/views/Verified.vue';
 import Admin from '@/views/Admin.vue';
 import { clearRedirect } from '../../tools';
+import AttendingList from '@/views/AttendingList.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -42,6 +43,10 @@ const routes: Array<RouteRecordRaw> = [
     path: '/admin',
     name: 'admin',
     component: Admin,
+  }, {
+    path: '/attendance',
+    name: 'attendance',
+    component: AttendingList,
   },
 ];
 
