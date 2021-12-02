@@ -27,7 +27,7 @@ import Checkbox from '@/components/Checkbox.vue';
 import { useStore } from 'vuex';
 import DOBPicker from '@/components/DOBPicker.vue';
 import { DateTime } from 'luxon';
-import { getAllForDate } from '@/api/visit';
+import { getAllForDate, removeVisit } from '@/api/visit';
 
 export default defineComponent({
   components: { DOBPicker, Checkbox },
@@ -35,6 +35,7 @@ export default defineComponent({
     const { state } = useStore();
 
     const attending = ref<VisitList>([]);
+    const date = DateTime.now();
 
     onMounted(async () => {
       try {
@@ -45,15 +46,20 @@ export default defineComponent({
       }
     });
 
-   async function removeVisit(item: VisitListItem) {
-
+    async function removeVisitC(item: VisitListItem) {
+      try {
+        await removeVisit(date, item);
+        attending.value = attending.value.filter(v => v._id !== item._id);
+      } catch (e) {
+        alert('Failed to load attending list: ' + e);
+      }
     }
 
     function formatTime(time: string) {
       return DateTime.fromISO(time).toLocaleString(DateTime.TIME_SIMPLE);
     }
 
-    return { attending, formatTime };
+    return { attending, formatTime, removeVisit: removeVisitC };
   },
 });
 </script>

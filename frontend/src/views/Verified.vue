@@ -110,7 +110,10 @@ export default defineComponent({
 
     function sortList() {
       resetTimer();
-
+      if (name.value.length < 1) {
+        visibleMembers.value = [];
+        return;
+      }
       visibleMembers.value = members.value
         .filter(v => nameRank(v.name.toLowerCase()) > 0)
         .sort(rankSort);

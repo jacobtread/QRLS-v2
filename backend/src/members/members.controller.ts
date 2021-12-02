@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AddMemberDto } from '../dtos/add-member.dto';
 import { MembersService } from './members.service';
 
@@ -9,7 +9,7 @@ export class MembersController {
   }
 
   @Post()
-  async addMember(addMemberDto: AddMemberDto) {
+  async addMember(@Body() addMemberDto: AddMemberDto) {
     return await this.membersService.addMember(addMemberDto);
   }
 

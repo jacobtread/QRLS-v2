@@ -3,6 +3,7 @@ import { Visit } from '../schemas/vists.schema';
 import { VisitsService } from './visits.service';
 import { VisitDto } from '../dtos/visit.dto';
 import { DateTime } from 'luxon';
+import { DeleteVisitDto } from '../dtos/delete-visit.dto';
 
 @Controller('visits')
 export class VisitsController {
@@ -21,8 +22,8 @@ export class VisitsController {
   }
 
   @Delete()
-  async deleteVisit(@Body() visitDto: VisitDto) {
-    await this.visitsService.remove(visitDto);
+  async deleteVisit(@Body() deleteVisitDto: DeleteVisitDto) {
+    await this.visitsService.deleteVisit(deleteVisitDto);
     return {};
   }
 

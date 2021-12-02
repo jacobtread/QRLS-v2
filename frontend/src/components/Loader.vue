@@ -27,6 +27,8 @@ export default defineComponent({
   background: #222;
   padding: 2rem;
   border-radius: 1rem;
+  justify-content: center;
+  text-align: center;
 
   &-wrapper {
     position: fixed;
@@ -43,6 +45,7 @@ export default defineComponent({
 
   &__logo {
     height: 100px;
+
   }
 
   &__title {

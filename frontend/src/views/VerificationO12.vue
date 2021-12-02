@@ -64,8 +64,11 @@
         sure you are using a valid Vaccine Pass. You can find more details about Vaccine Passes
         at <b class='link'>https://vaccine.qrl.nz</b>. If you are sure that this code is correct
         please push the <b>Retry</b> button and try and we will try and scan it again. If you are
-        not Vaccinated you can push the <b>Not Vaccinated</b> button instead
+        not Vaccinated you can push the <b>Not Vaccinated</b> button instead. If this problem
+        persists please show a facilitator your proof of vaccination and they will be able to
+        manually add it for you
       </p>
+
       <div class='button-group'>
         <button class='button' @click='state = "scanning"'>
           Retry
@@ -75,6 +78,7 @@
         </router-link>
       </div>
     </Dialog>
+
     <Dialog v-if='state === "error-message"'>
       <h1 class='dialog__title'>Error</h1>
       <p class='dialog__message'>

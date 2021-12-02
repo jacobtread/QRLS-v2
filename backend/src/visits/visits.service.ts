@@ -5,15 +5,12 @@ import { Model } from 'mongoose';
 import { VisitDto } from '../dtos/visit.dto';
 import { DateTime } from 'luxon';
 import { Member, MemberDocument } from '../schemas/member.schema';
+import { DeleteVisitDto } from '../dtos/delete-visit.dto';
 
 @Injectable()
 export class VisitsService {
 
   constructor(@InjectModel(Visit.name) private visitModel: Model<VisitDocument>, @InjectModel(Member.name) private memberModel: Model<MemberDocument>) {
-  }
-
-  async getForToday(visitDto: VisitDto) {
-
   }
 
   async create(visitDto: VisitDto) {
@@ -47,9 +44,8 @@ export class VisitsService {
     return createdVisit.save();
   }
 
-  async remove(visitDto: VisitDto) {
-    const date = DateTime.now().toISODate();
-    return this.visitModel.deleteOne({ ...visitDto, date });
+  async deleteVisit(deleteVisitDto: DeleteVisitDto) {
+    return this.visitModel.deleteOne({ _id: deleteVisitDto.id, date:  deleteVisitDto.date});
   }
 
   async findAll(): Promise<Visit[]> {

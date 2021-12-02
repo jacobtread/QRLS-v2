@@ -9,21 +9,21 @@ export class AppController {
 
   settings = {
     mandate: true,
-    nvMessage: `
-      Vaccination is required to enter please wait at the entrance and let somebody know that you are there
-    `,
+    nvMessage: 'Vaccination is required to enter please wait at the entrance and let somebody know that you are there',
   };
 
   @Get('settings')
   getSettings() {
-    console.log(this.settings)
+    console.log(this.settings);
     return this.settings;
   }
 
   @Put('settings')
   setSetting(@Body() setSettingDto: SetSettingDto) {
-    console.log(setSettingDto)
-    this.settings[setSettingDto.key] = setSettingDto.value;
+    const key = setSettingDto.key;
+    const value = setSettingDto.value;
+    this.settings[key] = value;
+    return {};
   }
 
 }

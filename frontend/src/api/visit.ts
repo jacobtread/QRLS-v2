@@ -6,3 +6,9 @@ export const markVisitGuest = (guestName: string) => axios.post('visits', { gues
 export const clearMarkedVerified = (member: string) => axios.delete('visits', { data: { member } });
 export const clearMarkedGuest = (guestName: string) => axios.delete('visits', { data: { guestName } });
 export const getAllForDate = (date: DateTime) => axios.get<VisitList>('visits', { params: { date: date.toISODate() } });
+export const removeVisit = (date: DateTime, visitItem: VisitListItem) => axios.delete('visits', {
+  data: {
+    date: date.toISODate(),
+    id: visitItem._id,
+  },
+});
