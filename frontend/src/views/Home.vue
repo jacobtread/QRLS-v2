@@ -33,13 +33,13 @@
           If you have not already gone through the verification process
         </p>
       </router-link>
-      <router-link to='' class='section-button' v-if='mandate'>
+      <router-link :to='{name:"not-vaccinated"}' class='section-button' v-if='mandate'>
         Not Vaccinated
         <p class='section-button__desc'>
           If you are not vaccinated and are above the age of 12 years <span>(+3 months)</span>
         </p>
       </router-link>
-      <router-link to='' class='section-button' v-else>
+      <router-link :to='{name: "guest"}' class='section-button' v-else>
         Without Verification
         <p class='section-button__desc'>
           Because the we are not currently required to validate vaccination passes you can choose to check in normally

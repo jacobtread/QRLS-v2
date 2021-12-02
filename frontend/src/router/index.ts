@@ -7,6 +7,8 @@ import Verified from '@/views/Verified.vue';
 import Admin from '@/views/Admin.vue';
 import { clearRedirect } from '../../tools';
 import AttendingList from '@/views/AttendingList.vue';
+import Guest from '@/views/Guest.vue';
+import NotVaccinated from '@/views/NotVaccinated.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -32,12 +34,17 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/not-vaccinated',
     name: 'not-vaccinated',
-    component: VerificationO12,
+    component: NotVaccinated,
   },
   {
     path: '/verified',
     name: 'verified',
     component: Verified,
+  },
+  {
+    path: '/guest',
+    name: 'guest',
+    component: Guest,
   },
   {
     path: '/admin',

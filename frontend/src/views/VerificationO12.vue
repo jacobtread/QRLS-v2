@@ -120,13 +120,8 @@ export default defineComponent({
   components: { Dialog, Loader, QRScanner, Logo },
   setup() {
     const state = ref('scanning');
-
     const verifyResult = ref<VerifyDetails>({ name: '', dob: '' });
-    const error = ref('');
-
     const dataURI = ref('');
-
-    const { push } = useRouter();
 
     async function completeScan(uri: string) {
       dataURI.value = uri;
@@ -151,11 +146,12 @@ export default defineComponent({
       } catch (e: any) {
         if (e.response) {
           const { status } = e.response;
-          console.log(status);
           if (status === 422) {
             state.value = 'already-verified';
           } else if (status === 400) {
             state.value = 'invalid-code';
+          }else {
+            state.value = 'error-message';
           }
         } else {
           state.value = 'error-message';
@@ -201,12 +197,10 @@ export default defineComponent({
 
     function complete() {
       state.value = 'complete';
-      setTimeout(() => {
-        push({ name: 'home' });
-      }, 10 * 1000);
+      setRedirectIn('home', 10);
     }
 
-    return { state, verifyResult, error, completeScan, confirm };
+    return { state, verifyResult, completeScan, confirm };
   },
 });
 </script>

@@ -141,6 +141,7 @@ export default defineComponent({
       if (e.code === 'Enter' && visibleMembers.value.length > 0) {
         await markAttendance(visibleMembers.value[0]);
       }
+      resetTimer()
     }
 
     function resetTimer() {
