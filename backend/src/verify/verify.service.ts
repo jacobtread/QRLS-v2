@@ -91,7 +91,7 @@ export class VerifyService {
     // Check for existing members
     const dob = DateTime.fromISO(credentials.dob);
     // TODO: When NZCP updates to include the expiry date replace this
-    const expiryDate = DateTime.now().plus({ month: 6 });
+    const expiryDate = DateTime.fromJSDate(result.expires);
     // Create New Verified Member
     const newMember = new this.memberModel({
       name,
