@@ -11,39 +11,42 @@
       <p v-if='mandate' class='mandate__desc'>We are required to verify your vaccination pass</p>
 
       <p class='description'>
-        Welcome to <b>Questionable Research Labs</b> if you are under 12 years <span>(+3 months)</span> old please push
-        the button with the
-        title <b>Under 12 Years</b> if you are <b>Not</b> Vaccinated please push the <b>Not Vaccinated</b> Button.
-        If you are Vaccinated and have already verified your Vaccine Pass click the <b>Already Verified</b> Button.
-        Otherwise push the <b>Not Verified</b> button
-
+        Welcome to <b>Questionable Research Labs</b>.<br/>
+        Under current covid conditions, it is expected that everyone wears a mask. If you do not have one, there is some "questionable" ones next to the kiosk.<br/>
+      </p>
+      <p v-if="mandate" class='description'>
+          We are currently required to verify your vaccination pass if you are over 12 years old <span>(+3 months)</span>. This means we have a maximum capacity of 100 people.
+      </p>
+      <p v-else class='description'>
+          We are not currently required to verify your vaccination status. This means we have a maximum capacity of 25 people. Please still verify if you can so we can make informed decisions later on.
       </p>
     </div>
     <div class='block section-buttons'>
       <h1>I am...</h1>
       <router-link :to='{name: "verified"}' class='section-button'>
-        Verified
+        Already Verified
         <p class='section-button__desc'>
-          If you have already gone through the verification process
+          If you have already gone through the verification process and either showed your vaccine pass or checked your date of birth.
         </p>
       </router-link>
-      <router-link :to='{name: "verification"}' class='section-button'>
-        Not Verified
+      <div class="setup-container section-buttons">
+        <router-link :to='{name: "verification-o12"}' class='section-button'>
+          Vaccinated &amp; Over 12 Years Old
+          <p class='section-button__desc'>
+            If you are over 12 Years <span>(+3 months)</span> old, and have your My Vaccine Pass.
+          </p>
+        </router-link>
+        <router-link :to='{name: "verification-u12"}' class='section-button'>
+          Under 12 Years Old
+          <p class='section-button__desc'>
+            If you are under 12 Years <span>(+3 months)</span> old
+          </p>
+        </router-link>
+      </div>
+      <router-link :to='mandate ? {name:"not-vaccinated"} : {name: "guest"}' class='section-button'>
+        Not Vaccinated &amp; Over 12 Years Old 
         <p class='section-button__desc'>
-          If you have not already gone through the verification process
-        </p>
-      </router-link>
-      <router-link :to='{name:"not-vaccinated"}' class='section-button' v-if='mandate'>
-        Not Vaccinated
-        <p class='section-button__desc'>
-          If you are not vaccinated and are above the age of 12 years <span>(+3 months)</span>
-        </p>
-      </router-link>
-      <router-link :to='{name: "guest"}' class='section-button' v-else>
-        Without Verification
-        <p class='section-button__desc'>
-          Because the we are not currently required to validate vaccination passes you can choose to check in normally
-          here
+            If you are not vaccinated and are above the age of 12 years <span>(+3 months)</span>
         </p>
       </router-link>
     </div>
@@ -143,12 +146,32 @@ export default defineComponent({
 .section-buttons {
   display: flex;
   flex-flow: column;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .block {
   display: flex;
   flex-flow: column;
+}
+
+.setup-container {
+  outline: white solid 1px;
+  outline-offset: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  scale: 1.2;
+      position: relative;
+  &::before {
+    content: "Setup";
+    position: absolute;
+    left: 50%;
+    top: -9%;
+    transform: translateX(-50%);
+    background: #1e1e1e;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+  }
 }
 
 </style>

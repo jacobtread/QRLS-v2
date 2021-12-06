@@ -10,7 +10,7 @@
         <button class='button' type='submit'>
           Done
         </button>
-        <router-link :to='{name: "verification"}' class='button'>
+        <router-link :to='{name: "home"}' class='button'>
           Go Back
         </router-link>
       </div>

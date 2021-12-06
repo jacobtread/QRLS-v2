@@ -10,7 +10,7 @@
         <b class='link'>https://vaccine.qrl.nz</b>
       </p>
 
-      <router-link :to='{name: "verification"}' class='button back'>
+      <router-link :to='{name: "home"}' class='button back'>
         Go Back
       </router-link>
     </div>
