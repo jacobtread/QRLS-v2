@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home from '../views/Home.vue';
-import VerificationAge from '@/views/VerificationAge.vue';
 import VerificationU12 from '@/views/VerificationU12.vue';
 import VerificationO12 from '@/views/VerificationO12.vue';
 import Verified from '@/views/Verified.vue';
@@ -15,11 +14,6 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'home',
     component: Home,
-  },
-  {
-    path: '/verification',
-    name: 'verification',
-    component: VerificationAge,
   },
   {
     path: '/verification-u12',

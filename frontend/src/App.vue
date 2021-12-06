@@ -4,18 +4,24 @@
       <component :is='Component' class='page' />
     </transition>
   </router-view>
-  <router-link :to='{name: "admin"}' class='button--admin'>
-    <Settings/>
+  <router-link :to='{name: "admin"}' class='button--floating top right'>
+    <SettingsIcon/>
   </router-link>
+  <transition name="fade">
+    <router-link :to='{name: "home"}' class='button--floating top left' v-if="$route.name!=='home'">
+      <HomeIcon/>
+    </router-link>
+  </transition>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 
-import Settings from '@/assets/settings.svg?inline';
+import SettingsIcon from '@/assets/settings.svg?inline';
+import HomeIcon from '@/assets/home.svg?inline'
 
 export default defineComponent({
-  components: { Settings },
+  components: { SettingsIcon, HomeIcon },
 });
 </script>
 
@@ -31,18 +37,32 @@ export default defineComponent({
   overflow: hidden;
 }
 
-.button--admin {
+.button--floating {
   position: fixed;
-  left: 1rem;
-  top: 1rem;
-  padding: 1rem;
+
+  width: 3rem;
+  height: 3rem;
   color: white;
   border-radius: 100%;
   background: #111;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: none;
+
+  $edge-spacing: 1rem;
+
+  &.top {
+    top: $edge-spacing;
+  }
+  &.left {
+    left: $edge-spacing;
+  }
+  &.right {
+    right: $edge-spacing;
+  }
 }
+
 
 
 </style>
