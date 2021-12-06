@@ -13,6 +13,7 @@ export class AppController {
   settings = {
     mandate: true,
     nvMessage: 'Vaccination is required to enter based on today\'s requirements. Please wait at the entrance and let somebody know that you are there.',
+    admin: process.env.ADMIN_PASSWORD
   };
 
   @Get('settings')
@@ -42,6 +43,7 @@ export class AppController {
     const file = join(dataDir, 'settings.json');
     if (existsSync(file)) {
       this.settings = JSON.parse(await fs.readFile(file, 'utf-8'));
+      this.settings.admin = process.env.ADMIN_PASSWORD
     }
   }
 

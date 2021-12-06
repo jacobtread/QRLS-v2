@@ -4,7 +4,7 @@
       <component :is='Component' class='page' />
     </transition>
   </router-view>
-  <router-link :to='{name: "admin"}' class='button--floating top right'>
+  <router-link :to='{name: "auth"}' class='button--floating top right'>
     <SettingsIcon/>
   </router-link>
   <transition name="fade">

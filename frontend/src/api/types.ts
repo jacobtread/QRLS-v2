@@ -11,6 +11,7 @@ interface VerifyListItem {
 interface Settings {
   mandate: boolean;
   nvMessage: string;
+  admin: string;
 }
 
 interface VisitListItem {

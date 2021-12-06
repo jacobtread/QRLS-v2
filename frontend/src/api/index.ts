@@ -14,6 +14,7 @@ async function loadSettings() {
     const { data } = await getSettings();
     store.state.mandate = data.mandate
     store.state.nvMessage = data.nvMessage
+    store.state.admin = data.admin
   } catch (e) {
     console.log('Failed to load settings', e);
   }

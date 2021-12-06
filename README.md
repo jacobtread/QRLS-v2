@@ -30,3 +30,4 @@ The following environment variables are required to run
 | Variable     | Example                        | Explanation                           |
 |--------------|--------------------------------|---------------------------------------|
 | DATABASE_URL | mongodb://localhost:27017/qrls | The port in which the app will run on |
+| ADMIN_PASSWORD |  | The password used to access the administrative menu |

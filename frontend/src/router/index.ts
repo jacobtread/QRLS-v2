@@ -8,6 +8,7 @@ import { clearRedirect } from '../../tools';
 import AttendingList from '@/views/AttendingList.vue';
 import Guest from '@/views/Guest.vue';
 import NotVaccinated from '@/views/NotVaccinated.vue';
+import Authenticate from '@/views/Authenticate.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -44,6 +45,10 @@ const routes: Array<RouteRecordRaw> = [
     path: '/admin',
     name: 'admin',
     component: Admin,
+  }, {
+    path: '/auth',
+    name: 'auth',
+    component: Authenticate,
   }, {
     path: '/attendance',
     name: 'attendance',
