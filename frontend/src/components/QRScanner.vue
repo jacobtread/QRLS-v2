@@ -39,26 +39,35 @@ export default defineComponent({
 
 <style scoped lang='scss'>
 .wrapper {
+  $size: 400px;
+
   display: flex;
   align-items: center;
   position: relative;
-  width: 400px;
-  height: 400px;
+  width: $size;
+  height: $size;
   overflow: hidden;
   -webkit-transform: scale(-1.5, 1.5);
   transform: scale(-1.5, 1.5);
   background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  video {
+    // Assumes 16*9 aspect ratio
+    width: ($size*(16/9));
+  }
 }
 
 .alignment {
 
   position: absolute;
-  left: calc(50% - 150px);
-  top: calc(50% - 150px);
-  width: 300px;
-  height: 300px;
-  border: 10px solid red;
-  border-radius: 5px;
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+  width: 200px;
+  height: 200px;
+  border: 5px solid red;
+  border-radius: 3px;
 
 }
 </style>

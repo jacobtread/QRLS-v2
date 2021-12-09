@@ -31,9 +31,9 @@
       </router-link>
       <div class="setup-container section-buttons">
         <router-link :to='{name: "verification-o12"}' class='section-button'>
-          Vaccinated &amp; Over 12 Years Old
+          Vaccinated
           <p class='section-button__desc'>
-            If you are over 12 Years <span>(+3 months)</span> old, and have your My Vaccine Pass.
+            If you have your My Vaccine Pass.
           </p>
         </router-link>
         <router-link :to='{name: "verification-u12"}' class='section-button'>
