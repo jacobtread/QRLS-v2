@@ -44,9 +44,9 @@
         </router-link>
       </div>
       <router-link :to='mandate ? {name:"not-vaccinated"} : {name: "guest"}' class='section-button'>
-        Not Vaccinated &amp; Over 12 Years Old 
+        No Vaccine Pass &amp; Over 12 Years 
         <p class='section-button__desc'>
-            If you are not vaccinated and are above the age of 12 years <span>(+3 months)</span>
+            If you don't have a Vaccine Pass and are above the age of 12 years <span>(+3 months)</span>
         </p>
       </router-link>
     </div>
