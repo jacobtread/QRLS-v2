@@ -38,6 +38,8 @@ export default defineComponent({
 </script>
 
 <style scoped lang='scss'>
+@use "sass:math";
+
 .wrapper {
   $size: 400px;
 
@@ -55,7 +57,7 @@ export default defineComponent({
   align-items: center;
   video {
     // Assumes 16*9 aspect ratio
-    width: ($size*(16/9));
+    width: ($size*math.div(16, 9));
   }
 }
 
