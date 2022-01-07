@@ -15,15 +15,12 @@
         v-model='name' required
         @keydown='inputKey' @input='sortList' tabindex='1'
         @focus='selected = -1'
+        ref="nameInput"
       >
-      <div class='button-group'>
-        <button class='button' @click='done'>Done</button>
-        <router-link class='button' :to='{name: "home"}'>Back</router-link>
-      </div>
       <div class='list' tabindex='2' id='membersList'>
         <div v-for='(value, index) in visibleMembers' :key='index' :tabindex='index + 3'
              :class='{"list__item": true, "list__item--selected": selected === index}'
-             @click='selectIndex(index)'
+             @click='selectIndex(index);done()'
              @focus='selectIndex(index)'
              @keydown='enterFocusRow($event, value)'
         >
@@ -214,6 +211,9 @@ export default defineComponent({
       done, selected, sortList, enterFocusRow,
       selectIndex, state, undo,
     };
+  },
+  mounted() {
+    (this.$refs.nameInput as HTMLInputElement).focus();
   },
 });
 </script>

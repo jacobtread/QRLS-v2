@@ -5,7 +5,7 @@
       <p class='content__text'>Please enter your full name in the box below and then press the <b>Done</b> button when
         you are done</p>
       <input class='input' type='text' @keydown='resetTimer' placeholder='Your Full Name' autocomplete='off'
-             v-model='name' required>
+             v-model='name' required ref="nameInput">
       <div class='button-group'>
         <button class='button' type='submit'>
           Done
@@ -109,6 +109,9 @@ export default defineComponent({
     resetTimer();
 
     return { name, resetTimer, verify, state };
+  },
+  mounted() {
+    (this.$refs.nameInput as HTMLInputElement).focus();
   },
 });
 </script>

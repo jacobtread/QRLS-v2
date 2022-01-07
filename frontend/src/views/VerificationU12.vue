@@ -4,7 +4,7 @@
       <h1 class='content__title'>Welcome</h1>
       <p class='content__text'>Please enter your full name in the box below and select your date of birth in the box
         under that and then press the <b>Done</b> button when you are done</p>
-      <input class='input' type='text' placeholder='Your Full Name' autocomplete='off' v-model='name' required>
+      <input class='input' type='text' placeholder='Your Full Name' autocomplete='off' v-model='name' required ref="nameInput">
       <DOBPicker @change='changeDate' class='date-picker' />
       <div class='button-group'>
         <button class='button' type='submit'>
@@ -147,6 +147,9 @@ export default defineComponent({
     }
 
     return { date, changeDate, name, verify, state };
+  },
+  mounted() {
+    (this.$refs.nameInput as HTMLInputElement).focus();
   },
 });
 </script>
