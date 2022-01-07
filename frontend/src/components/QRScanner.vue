@@ -58,6 +58,13 @@ export default defineComponent({
   video {
     // Assumes 16*9 aspect ratio
     width: ($size*math.div(16, 9));
+
+    // Only apply the filter if the alignment can undo it
+    // Otherwise on Firefox the whole video will be dark,
+    // not just the outer edges
+    @supports (backdrop-filter: brightness(2)) {
+      filter: brightness(0.5);
+    }
   }
 }
 
@@ -68,8 +75,12 @@ export default defineComponent({
   top: calc(50% - 100px);
   width: 200px;
   height: 200px;
-  border: 5px solid red;
+  border: 4px solid white;
   border-radius: 3px;
 
+  // Not supported on Firefox
+  @supports (backdrop-filter: brightness(2)) {
+    backdrop-filter: brightness(2);
+  }
 }
 </style>
