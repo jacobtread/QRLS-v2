@@ -125,8 +125,8 @@ export class VerifyService {
       );
     }
 
-    // Ah yes lets hope this doesnt fail
-    const expiresAt = dob.plus({ years: 13.3 /* Rounded up to .3 cause yeah */ });
+    // 12 years old and 3 months is when the they need to get a pass
+    const expiresAt = dob.plus({ years: 12, months: 3 });
 
     // Create New Verified Member
     const newMember = new this.memberModel({

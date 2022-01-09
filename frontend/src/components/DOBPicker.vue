@@ -42,7 +42,7 @@ export default defineComponent({
     watch(date, () => months.value = possibleMonths());
 
     function possibleYears() {
-      return listOfNumbers(2003, now.getFullYear());
+      return listOfNumbers(2000, now.getFullYear());
     }
 
     function possibleMonths() {
